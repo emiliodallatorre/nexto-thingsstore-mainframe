@@ -15,13 +15,7 @@ fun main(args: Array<String>) {
         println("Avvio gestione della connessione!")
 
         Thread {
-            when (clientSocket.getInputStream().read()) {
-                1 -> println("Inviato 1!")
-                2 -> println("Inviato 2!")
-                else -> println("Errore!")
-            }
-
-            clientSocket.close()
+            // Do something with input.
         }
     }
 }
