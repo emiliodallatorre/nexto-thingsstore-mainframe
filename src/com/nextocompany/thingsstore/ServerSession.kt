@@ -3,11 +3,15 @@ package com.nextocompany.thingsstore
 import java.util.*
 
 object ServerSession {
+    lateinit var initializer: ServerInitializer
+
     lateinit var logger: ServerLogger
     lateinit var controls: ServerControls
+    lateinit var listener: ConnectionListener
+    lateinit var waiter: ConnectionWaiter
+
     lateinit var scanner: Scanner
-    lateinit var listener: Thread
 
     var serverStatus: Int = 0
-    var verboseOutput: Boolean = false
+    var verboseOutput: Boolean = true
 }
