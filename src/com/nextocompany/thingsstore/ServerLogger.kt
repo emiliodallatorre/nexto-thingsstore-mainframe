@@ -21,12 +21,23 @@ class ServerLogger {
             References.LEVEL_LOG -> ANSI_COLOR = References.ANSI_WHITE
         }
 
-        // Scrive su un file tutto ciò che viene stampato sullo schermo.
-        session.logger.bufferedWriter.write(("$time | $message").replace("\n", ""))
+        logToFile(("$dateStamp - $timeStamp | $message").replace("\n", ""), level)
+
+        if (level != References.LEVEL_FILE) logToScreen(
+            ANSI_COLOR + "$timeStamp | $message" + References.ANSI_RESET,
+            level
+        )
+    }
+
+    private fun logToScreen(message: String, level: Int) {
+        if (session.verboseOutput || level < 4) println(message)
+    }
+
+    private fun logToFile(message: String, level: Int) {
+        var messageFormatted: String = message
+        if(level == References.LEVEL_FILE) messageFormatted = "$message"
+        session.logger.bufferedWriter.write(messageFormatted)
         session.logger.bufferedWriter.newLine()
         session.logger.bufferedWriter.flush()
-
-        if(session.verboseOutput) println(ANSI_COLOR + "$time | $message" + References.ANSI_RESET)
-        else if(level < 4) println(ANSI_COLOR + "$time | $message" + References.ANSI_RESET)
     }
 }
