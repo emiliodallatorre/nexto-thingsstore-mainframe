@@ -1,15 +1,16 @@
 package com.nextocompany.thingsstore
 
 import java.io.BufferedWriter
-import java.time.ZonedDateTime
-import java.time.temporal.ChronoUnit
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ServerLogger {
     lateinit var bufferedWriter: BufferedWriter
 
     fun log(message: String, level: Int) {
-        // TODO: Trovare un metodo per far stampare i secondi anche quando sono == 00.
-        val time: String = ZonedDateTime.now().toLocalTime().truncatedTo(ChronoUnit.SECONDS).toString()
+        val dateStamp: String = SimpleDateFormat("dd/MM/yyyy").format(Date())
+        val timeStamp: String = SimpleDateFormat("HH:mm:ss").format(Date())
+
         lateinit var ANSI_COLOR: String
 
         when (level) {
