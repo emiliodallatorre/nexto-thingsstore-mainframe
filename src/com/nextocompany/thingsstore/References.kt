@@ -3,7 +3,7 @@ package com.nextocompany.thingsstore
 /**
  * Qui sono contenute tutte le referenze costanti che servono a gestire il server.
  * Queste referenze possono essere considerate anche come "impostazioni".
- * I const valori qui inseriti regolano il funzionamento dell'intero server.
+ * I valori costanti qui inseriti regolano il funzionamento dell'intero server.
  */
 
 object References {
@@ -19,16 +19,18 @@ object References {
 
     const val STATUS_RUNNING: Int = 0
     const val STATUS_STOPPED: Int = 1
+    const val STATUS_ERROR: Int = 1
 
     const val LEVEL_ERROR: Int = 0
     const val LEVEL_SERVER: Int = 1
     const val LEVEL_WARNING: Int = 2
     const val LEVEL_MESSAGE: Int = 3
     const val LEVEL_LOG: Int = 4
+    const val LEVEL_FILE: Int = 4
 
     const val SERVER_PORT: Int = 2048
     const val SERVER_MAXCONNECTIONS: Int = 10
-    const val SERVER_REFRESHRATE: Long = 10 * 1000
+    const val SERVER_REFRESHRATE: Long = 1 * 1000
 
     const val FILE_LOG: String = "Server.log"
 }
