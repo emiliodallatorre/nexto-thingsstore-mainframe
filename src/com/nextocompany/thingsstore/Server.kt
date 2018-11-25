@@ -7,7 +7,11 @@ val session: ServerSession = ServerSession
 fun main(args: Array<String>) {
     session.initializer = ServerInitializer()
 
-    session.listener.start()
+    session.initializer.initAll()
+
+    session.listener.startListening()
+
+    session.scanner = Scanner(System.`in`)
 
     while (true) {
         when (session.scanner.nextLine()) {
@@ -15,6 +19,8 @@ fun main(args: Array<String>) {
             "start" -> session.controls.start()
             "verbose" -> session.controls.verbose()
             "status" -> session.controls.status()
+            "disconnetti" -> session.controls.disconnectAll()
+            "log" -> session.controls.log()
             else -> session.logger.log("Errore, riprovare!\n", References.LEVEL_SERVER)
         }
     }
