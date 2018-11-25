@@ -2,21 +2,19 @@ package com.nextocompany.thingsstore
 
 import java.net.Socket
 
-
-internal class ConnectionHandler : Thread() {
+class ConnectionHandler : Thread() {
     lateinit var clientSocket: Socket
 
     override fun run() {
+        // Qui si procede alle azioni necessarie a gestire una connessione entrante.
         println("Avvio della gestione di: " + clientSocket.inetAddress.hostAddress, References.LEVEL_LOG)
         Thread.sleep(20000)
-        println("Disconnessione da: " + clientSocket.inetAddress.hostAddress, References.LEVEL_LOG)
         clientSocket.close()
+        println("Disconnessione da: " + clientSocket.inetAddress.hostAddress, References.LEVEL_LOG)
     }
 
     fun println(message: String, level: Int) {
-        com.nextocompany.thingsstore.println(
-            "[ " + String.format("%03d", Thread.currentThread().id) + " ] $message",
-            level
-        )
+        // Qui viene aggiunto il prefisso del thread all'output del log.
+        session.logger.log("[ " + String.format("%03d", Thread.currentThread().id) + " ] $message", level)
     }
 }

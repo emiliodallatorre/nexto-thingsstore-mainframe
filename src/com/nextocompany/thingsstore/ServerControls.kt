@@ -1,25 +1,38 @@
 package com.nextocompany.thingsstore
 
 class ServerControls {
+
     fun status() {
-        when () {
-            References.STATUS_RUNNING -> log("Il server sta funzionando normalmente.", References.LEVEL_SERVER)
-            References.STATUS_STOPPED -> log("Il server è stato interrotto dall'amministratore.", References.LEVEL_SERVER)
+        when (session.serverStatus) {
+            References.STATUS_RUNNING -> session.logger.log(
+                "Il server sta funzionando normalmente.",
+                References.LEVEL_SERVER
+            )
+            References.STATUS_STOPPED -> session.logger.log(
+                "Il server è stato interrotto dall'amministratore.",
+                References.LEVEL_SERVER
+            )
         }
     }
-    fun verbose() {
-        verboseOutput = !verboseOutput
-        if (verboseOutput) log("Modalità verbosa attivata.\n", References.LEVEL_SERVER)
-        else log("Modalità verbosa disattivata.\n", References.LEVEL_SERVER)
-    }
 
-    fun disconnetti() {
-        executor.shutdown()
-        log("Tutte le connessioni sono state disconnesse.\n", References.LEVEL_SERVER)
+    fun verbose() {
+        session.verboseOutput = !session.verboseOutput
+
+        if (session.verboseOutput) session.logger.log("Modalità verbosa attivata.", References.LEVEL_SERVER)
+        else session.logger.log("Modalità verbosa disattivata.", References.LEVEL_SERVER)
     }
 
     fun stop() {
-        serverStatus = References.STATUS_STOPPED
-        log("Il server non accetta più connessioni in ingresso.\n", References.LEVEL_SERVER)
+        session.logger.log("Tentativo di disattivare l\'ascolto di nuove connessioni.", References.LEVEL_SERVER)
+
+        if (session.serverStatus == References.STATUS_STOPPED) session.logger.log("Il server è già inattivo.", References.LEVEL_MESSAGE)
+        else session.serverStatus = References.STATUS_STOPPED
+    }
+
+    fun start() {
+        session.logger.log("Tentativo di attivare l\'ascolto di nuove connessioni.", References.LEVEL_SERVER)
+
+        if (session.serverStatus == References.STATUS_RUNNING) session.logger.log("Il server è già attivo.", References.LEVEL_MESSAGE)
+        else session.serverStatus = References.STATUS_RUNNING
     }
 }
