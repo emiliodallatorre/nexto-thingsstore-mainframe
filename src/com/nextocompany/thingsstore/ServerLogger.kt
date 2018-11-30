@@ -11,20 +11,20 @@ class ServerLogger {
         val dateStamp: String = SimpleDateFormat("dd/MM/yyyy").format(Date())
         val timeStamp: String = SimpleDateFormat("HH:mm:ss").format(Date())
 
-        lateinit var ANSI_COLOR: String
+        lateinit var color: String
 
         when (level) {
-            References.LEVEL_ERROR -> ANSI_COLOR = References.ANSI_RED
-            References.LEVEL_SERVER -> ANSI_COLOR = References.ANSI_CYAN
-            References.LEVEL_WARNING -> ANSI_COLOR = References.ANSI_YELLOW
-            References.LEVEL_MESSAGE -> ANSI_COLOR = References.ANSI_GREEN
-            References.LEVEL_LOG -> ANSI_COLOR = References.ANSI_WHITE
+            References.LEVEL_ERROR -> color = References.ANSI_RED
+            References.LEVEL_SERVER -> color = References.ANSI_CYAN
+            References.LEVEL_WARNING -> color = References.ANSI_YELLOW
+            References.LEVEL_MESSAGE -> color = References.ANSI_GREEN
+            References.LEVEL_LOG -> color = References.ANSI_WHITE
         }
 
         logToFile(("$dateStamp - $timeStamp | $message").replace("\n", ""), level)
 
         if (level != References.LEVEL_FILE) logToScreen(
-            ANSI_COLOR + "$timeStamp | $message" + References.ANSI_RESET,
+            color + "$timeStamp | $message" + References.ANSI_RESET,
             level
         )
     }
@@ -34,10 +34,10 @@ class ServerLogger {
     }
 
     private fun logToFile(message: String, level: Int) {
-        var messageFormatted: String = message
-        if(level == References.LEVEL_FILE) messageFormatted = "$message"
-        session.logger.bufferedWriter.write(messageFormatted)
-        session.logger.bufferedWriter.newLine()
-        session.logger.bufferedWriter.flush()
+        if (level != References.LEVEL_MESSAGE) {
+            session.logger.bufferedWriter.write(message)
+            session.logger.bufferedWriter.newLine()
+            session.logger.bufferedWriter.flush()
+        }
     }
 }
