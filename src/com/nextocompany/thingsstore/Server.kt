@@ -22,6 +22,7 @@ fun main(args: Array<String>) {
             "status" -> session.controls.status()
             "disconnetti" -> session.controls.disconnectAll()
             "log" -> session.controls.log()
+            "test" -> session.controls.test()
             else -> session.logger.log("Errore, riprovare!\n", References.LEVEL_SERVER)
         }
     }

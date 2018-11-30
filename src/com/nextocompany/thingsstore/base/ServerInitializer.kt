@@ -1,7 +1,8 @@
 package com.nextocompany.thingsstore.base
 
 import com.nextocompany.thingsstore.References
-import com.nextocompany.thingsstore.ServerSession
+import com.nextocompany.thingsstore.session
+import com.nextocompany.thingsstore.test.ServerTest
 import java.io.BufferedWriter
 import java.io.FileWriter
 import java.util.concurrent.Executors
@@ -9,22 +10,26 @@ import java.util.concurrent.Executors
 class ServerInitializer {
 
     fun initLogger() {
-        ServerSession.logger = ServerLogger()
-        ServerSession.logger.bufferedWriter = BufferedWriter(FileWriter(References.FILE_LOG, true))
+        session.logger = ServerLogger()
+        session.logger.bufferedWriter = BufferedWriter(FileWriter(References.FILE_LOG, true))
     }
 
     fun initControls() {
-        ServerSession.controls = ServerControls()
+        session.controls = ServerControls()
     }
 
     fun initListener() {
         val connectionListener = ConnectionListener()
         connectionListener.executor = Executors.newFixedThreadPool(References.SERVER_MAXCONNECTIONS)
-        ServerSession.listener = connectionListener
+        session.listener = connectionListener
     }
 
     fun initWaiter() {
-        ServerSession.waiter = ConnectionWaiter()
+        session.waiter = ConnectionWaiter()
+    }
+
+    fun initTester() {
+        session.tester = ServerTest()
     }
 
     fun initAll() {
@@ -32,7 +37,8 @@ class ServerInitializer {
         initControls()
         initListener()
         initWaiter()
-        ServerSession.logger.log("Server inizializzato correttamente.",
+        initTester()
+        session.logger.log("Server inizializzato correttamente.",
             References.LEVEL_MESSAGE
         )
     }

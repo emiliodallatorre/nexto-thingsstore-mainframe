@@ -1,8 +1,8 @@
 package com.nextocompany.thingsstore.base
 
 import com.nextocompany.thingsstore.References
-import com.nextocompany.thingsstore.ServerSession
 import com.nextocompany.thingsstore.handler.ConnectionHandler
+import com.nextocompany.thingsstore.session
 import java.net.ServerSocket
 import java.net.Socket
 
@@ -11,17 +11,17 @@ class ConnectionWaiter : Thread() {
     private lateinit var clientSocket: Socket
 
     override fun run() {
-        ServerSession.serverStatus = References.STATUS_RUNNING
-        ServerSession.logger.log("Attivato l'ascolto di nuove connessioni.",
+        session.serverStatus = References.STATUS_RUNNING
+        session.logger.log("Attivato l'ascolto di nuove connessioni.",
             References.LEVEL_WARNING
         )
 
-        while (ServerSession.serverStatus == References.STATUS_RUNNING) {
+        while (session.serverStatus == References.STATUS_RUNNING) {
 
             try {
                 clientSocket = serverSocket.accept()
 
-                ServerSession.logger.log(
+                session.logger.log(
                     "Connessione in ingresso da: " + clientSocket.inetAddress.hostAddress,
                     References.LEVEL_MESSAGE
                 )
@@ -29,31 +29,31 @@ class ConnectionWaiter : Thread() {
                 val connectionHandler = ConnectionHandler()
                 connectionHandler.clientSocket = clientSocket
 
-                ServerSession.listener.executor.execute(connectionHandler)
-                ServerSession.logger.log("Gestione della connessione inviata a Thread.",
+                session.listener.executor.execute(connectionHandler)
+                session.logger.log("Gestione della connessione inviata a Thread.",
                     References.LEVEL_LOG
                 )
             }
 
             catch (e: java.net.SocketException) {
-                if (ServerSession.serverStatus != References.STATUS_STOPPED) {
-                    ServerSession.serverStatus =
+                if (session.serverStatus != References.STATUS_STOPPED) {
+                    session.serverStatus =
                             References.STATUS_ERROR
-                    ServerSession.logger.log("Il server è stato interrotto senza apparente ragione.",
+                    session.logger.log("Il server è stato interrotto senza apparente ragione.",
                         References.LEVEL_ERROR
                     )
                 }
             }
         }
 
-        ServerSession.logger.log("Disattivato l'ascolto di nuove connessioni.",
+        session.logger.log("Disattivato l'ascolto di nuove connessioni.",
             References.LEVEL_WARNING
         )
     }
 
     override fun interrupt() {
         super.interrupt()
-        ServerSession.serverStatus = References.STATUS_STOPPED
-        ServerSession.waiter.serverSocket.close()
+        session.serverStatus = References.STATUS_STOPPED
+        session.waiter.serverSocket.close()
     }
 }

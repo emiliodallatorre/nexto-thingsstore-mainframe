@@ -1,7 +1,7 @@
 package com.nextocompany.thingsstore.base
 
 import com.nextocompany.thingsstore.References
-import com.nextocompany.thingsstore.ServerSession
+import com.nextocompany.thingsstore.session
 import java.io.BufferedWriter
 import java.text.SimpleDateFormat
 import java.util.*
@@ -28,23 +28,20 @@ class ServerLogger {
                     References.ANSI_WHITE
         }
 
-        logToFile(("$dateStamp - $timeStamp | $message").replace("\n", ""), level)
+        if (level != References.LEVEL_SERVER) logToFile(("$dateStamp - $timeStamp | $message").replace("\n", ""))
 
         if (level != References.LEVEL_FILE) logToScreen(
-            color + "$timeStamp | $message" + References.ANSI_RESET,
-            level
+            color + "$timeStamp | $message" + References.ANSI_RESET
         )
     }
 
-    private fun logToScreen(message: String, level: Int) {
-        if (ServerSession.verboseOutput || level < 4) println(message)
+    private fun logToScreen(message: String) {
+        println(message)
     }
 
-    private fun logToFile(message: String, level: Int) {
-        if (level != References.LEVEL_MESSAGE) {
-            ServerSession.logger.bufferedWriter.write(message)
-            ServerSession.logger.bufferedWriter.newLine()
-            ServerSession.logger.bufferedWriter.flush()
-        }
+    private fun logToFile(message: String) {
+        session.logger.bufferedWriter.write(message)
+        session.logger.bufferedWriter.newLine()
+        session.logger.bufferedWriter.flush()
     }
 }
