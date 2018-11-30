@@ -1,5 +1,7 @@
-package com.nextocompany.thingsstore
+package com.nextocompany.thingsstore.base
 
+import com.nextocompany.thingsstore.References
+import com.nextocompany.thingsstore.ServerSession
 import java.io.BufferedWriter
 import java.text.SimpleDateFormat
 import java.util.*
@@ -14,11 +16,16 @@ class ServerLogger {
         lateinit var color: String
 
         when (level) {
-            References.LEVEL_ERROR -> color = References.ANSI_RED
-            References.LEVEL_SERVER -> color = References.ANSI_CYAN
-            References.LEVEL_WARNING -> color = References.ANSI_YELLOW
-            References.LEVEL_MESSAGE -> color = References.ANSI_GREEN
-            References.LEVEL_LOG -> color = References.ANSI_WHITE
+            References.LEVEL_ERROR -> color =
+                    References.ANSI_RED
+            References.LEVEL_SERVER -> color =
+                    References.ANSI_CYAN
+            References.LEVEL_WARNING -> color =
+                    References.ANSI_YELLOW
+            References.LEVEL_MESSAGE -> color =
+                    References.ANSI_GREEN
+            References.LEVEL_LOG -> color =
+                    References.ANSI_WHITE
         }
 
         logToFile(("$dateStamp - $timeStamp | $message").replace("\n", ""), level)
@@ -30,14 +37,14 @@ class ServerLogger {
     }
 
     private fun logToScreen(message: String, level: Int) {
-        if (session.verboseOutput || level < 4) println(message)
+        if (ServerSession.verboseOutput || level < 4) println(message)
     }
 
     private fun logToFile(message: String, level: Int) {
         if (level != References.LEVEL_MESSAGE) {
-            session.logger.bufferedWriter.write(message)
-            session.logger.bufferedWriter.newLine()
-            session.logger.bufferedWriter.flush()
+            ServerSession.logger.bufferedWriter.write(message)
+            ServerSession.logger.bufferedWriter.newLine()
+            ServerSession.logger.bufferedWriter.flush()
         }
     }
 }

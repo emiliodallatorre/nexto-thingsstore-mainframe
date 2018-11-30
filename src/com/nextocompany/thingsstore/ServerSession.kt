@@ -1,5 +1,6 @@
 package com.nextocompany.thingsstore
 
+import com.nextocompany.thingsstore.base.*
 import java.util.*
 
 object ServerSession {
