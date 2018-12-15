@@ -1,1 +1,1 @@
-web: gradlew jar
+server: gradlew run
