@@ -26,11 +26,14 @@ object References {
     const val LEVEL_WARNING: Int = 2
     const val LEVEL_MESSAGE: Int = 3
     const val LEVEL_LOG: Int = 4
-    const val LEVEL_FILE: Int = 4
+    const val LEVEL_FILE: Int = 5
 
     const val SERVER_PORT: Int = 2048
     const val SERVER_MAXCONNECTIONS: Int = 10
     const val SERVER_REFRESHRATE: Long = 1 * 1000
 
     const val FILE_LOG: String = "Server.log"
+
+    const val CODE_TEST: Int = 0
+    const val CODE_TEST_STRING: String = "023b1613de718b88701e45fd1035d23d"
 }
