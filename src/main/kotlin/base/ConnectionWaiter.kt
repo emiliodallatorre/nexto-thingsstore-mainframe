@@ -21,18 +21,11 @@ class ConnectionWaiter : Thread() {
             try {
                 clientSocket = serverSocket.accept()
 
-                session.logger.log(
-                    "Connessione in ingresso da: " + clientSocket.inetAddress.hostAddress,
-                    References.LEVEL_MESSAGE
-                )
 
                 val connectionHandler = ConnectionHandler()
                 connectionHandler.clientSocket = clientSocket
 
                 session.listener.executor.execute(connectionHandler)
-                session.logger.log("Gestione della connessione inviata a Thread.",
-                    References.LEVEL_LOG
-                )
             }
 
             catch (e: java.net.SocketException) {

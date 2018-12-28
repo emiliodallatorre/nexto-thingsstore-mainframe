@@ -4,37 +4,43 @@ import com.nextocompany.thingsstore.References
 import com.nextocompany.thingsstore.session
 import java.io.DataInputStream
 import java.io.DataOutputStream
+import java.io.EOFException
 import java.net.Socket
 
 class ConnectionHandler : Thread() {
+    private val functions: ServerFunctions = ServerFunctions()
     lateinit var clientSocket: Socket
-    lateinit var input: DataInputStream
-    lateinit var output: DataOutputStream
+    private lateinit var input: DataInputStream
+    private lateinit var output: DataOutputStream
 
     override fun run() {
+        ping(
+            "Connessione in ingresso da: " + clientSocket.inetAddress.hostAddress,
+            References.LEVEL_MESSAGE
+        )
+
         startHandling()
-        stopHandling()
     }
 
     private fun startHandling() {
         input = DataInputStream(clientSocket.getInputStream())
+
         output = DataOutputStream(clientSocket.getOutputStream())
 
-        while (true) {
-            val a = input.readByte().toInt()
+        try {
+            when (input.readByte().toInt()) {
+                References.CODE_TEST -> functions.test(input, output)
+                References.CODE_LOGIN -> functions.validateLogin(input, output)
 
-            when (a) {
-                References.CODE_TEST -> {
-                    if (input.readUTF() == References.CODE_TEST_STRING) {
-                        ping("Connessione confermata", References.LEVEL_LOG)
-                        output.writeByte(References.CODE_TEST)
-                        output.writeUTF(References.CODE_TEST_STRING)
-                        output.flush()
-                    }
-                }
-                else -> {
-                }
+                else -> ping("Tentativo di accesso non riconosciuto.", References.LEVEL_ERROR)
             }
+
+            stopHandling()
+        }
+
+        // Qui sappiamo che abbiamo raggiunto la fine dello stream in entrata, non è un problema.
+        catch (e: EOFException) {
+            ping("Qualcosa non funziona.", References.LEVEL_ERROR)
         }
     }
 
@@ -46,7 +52,7 @@ class ConnectionHandler : Thread() {
         )
     }
 
-    private fun ping(message: String, level: Int) {
+    fun ping(message: String, level: Int) {
         // Qui viene aggiunto il prefisso del thread all'output del log.
         session.logger.log("[ " + String.format("%03d", Thread.currentThread().id) + " ] $message", level)
     }
