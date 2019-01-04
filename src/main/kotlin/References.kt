@@ -37,4 +37,7 @@ object References {
     const val CODE_TEST: Int = 0
     const val CODE_LOGIN: Int = 1
     const val CODE_TEST_STRING: String = "023b1613de718b88701e45fd1035d23d"
+
+    const val SQL_USERNAME: String = "server"
+    const val SQL_PASSWORD: String = "blindEye1201"
 }

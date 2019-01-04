@@ -21,7 +21,7 @@ class ServerFunctions {
 
     fun test(input: DataInputStream, output: DataOutputStream) {
         if (input.readUTF() == References.CODE_TEST_STRING) {
-            ConnectionHandler().ping("Connessione confermata", References.LEVEL_LOG)
+            ConnectionHandler().ping("Connessione confermata.", References.LEVEL_LOG)
 
             output.writeByte(References.CODE_TEST)
             output.writeUTF(References.CODE_TEST_STRING)
