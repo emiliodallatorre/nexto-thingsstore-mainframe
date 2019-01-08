@@ -1,16 +1,21 @@
 package com.nextocompany.thingsstore.handler
 
 import com.nextocompany.thingsstore.References
+import com.nextocompany.thingsstore.handler.mysql.LoginManager
+import com.nextocompany.thingsstore.session
 import java.io.DataInputStream
 import java.io.DataOutputStream
 
 class ServerFunctions {
+    private lateinit var loginManager: LoginManager
 
     fun validateLogin(input: DataInputStream, output: DataOutputStream) {
         // TODO: Change this way.
         val rawData = input.readUTF()
         val id = rawData.split("§")[0]
         val password = rawData.split("§")[1]
+
+        session.login.login(id, password)
 
         output.writeBoolean(id == "emiliodallatorre12@live.com" && password == "blindEye1201")
         output.flush()

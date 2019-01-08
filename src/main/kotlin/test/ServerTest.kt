@@ -1,10 +1,11 @@
 package com.nextocompany.thingsstore.test
 
-import com.nextocompany.thingsstore.handler.mysql.LoginManager
+import com.nextocompany.thingsstore.session
 
 class ServerTest {
 
     fun test() {
-        LoginManager().connect()
+        session.login.connect()
+        session.login.login("emiliodallatorr12e12@live.com", "blindEye1201")
     }
 }

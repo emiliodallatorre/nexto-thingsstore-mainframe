@@ -1,6 +1,7 @@
 package com.nextocompany.thingsstore.base
 
 import com.nextocompany.thingsstore.References
+import com.nextocompany.thingsstore.handler.mysql.LoginManager
 import com.nextocompany.thingsstore.session
 import com.nextocompany.thingsstore.test.ServerTest
 import java.io.BufferedWriter
@@ -32,12 +33,17 @@ class ServerInitializer {
         session.tester = ServerTest()
     }
 
+    fun initLogin() {
+        session.login = LoginManager()
+    }
+
     fun initAll() {
         initLogger()
         initControls()
         initListener()
         initWaiter()
         initTester()
+        initLogin()
         session.logger.log("Server inizializzato correttamente.",
             References.LEVEL_MESSAGE
         )

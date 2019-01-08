@@ -40,4 +40,8 @@ object References {
 
     const val SQL_USERNAME: String = "server"
     const val SQL_PASSWORD: String = "blindEye1201"
+    const val SQL_PORT: Int = 3306
+    const val SQL_DATABASE: String = "utenti"
+    const val SQL_TABLE: String = "login"
+    const val SQL_TIMEZONE: String = "UTC"
 }
