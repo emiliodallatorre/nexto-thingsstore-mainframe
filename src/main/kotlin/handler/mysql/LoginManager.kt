@@ -6,6 +6,10 @@ import java.sql.DriverManager
 import java.sql.ResultSet
 import java.sql.SQLException
 
+/** Questa classe permette di controllare la validità delle credenziali.
+ *
+ */
+
 class LoginManager {
     private lateinit var connection: Connection
 
@@ -32,8 +36,14 @@ class LoginManager {
             correctPassword = resultSet.getString("password")
         }
 
-        // TODO: This needs to be implemented by updating Kotlin.
+        // TODO: Questo funzionerà quando Kotlin rilascerà questa funzione al pubblico.
         // if(::correctPassword.isInitialized) return false
+        try {
+            correctPassword
+        } catch (e: kotlin.UninitializedPropertyAccessException) {
+            return false
+        }
+        // Questo workaround permette di controllare se la variabile è stata inizializzata.
 
         return password == correctPassword
     }

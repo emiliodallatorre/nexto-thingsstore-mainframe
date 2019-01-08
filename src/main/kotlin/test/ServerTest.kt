@@ -6,6 +6,6 @@ class ServerTest {
 
     fun test() {
         session.login.connect()
-        session.login.login("emiliodallatorr12e12@live.com", "blindEye1201")
+        println(session.login.login("emiliodallatorr12e12@live.com", "blindEye1201"))
     }
 }
