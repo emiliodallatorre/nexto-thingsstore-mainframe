@@ -1,13 +1,15 @@
 package com.nextocompany.thingsstore.handler.mysql
 
 import com.nextocompany.thingsstore.References
+import com.nextocompany.thingsstore.session
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.ResultSet
 import java.sql.SQLException
 
 /** Questa classe permette di controllare la validità delle credenziali.
- *
+ * Il controllo viene fatto a fronte di un database MySQL su localhost.
+ * In questa classe si possono implementare le funzioni di sicurezza.
  */
 
 class LoginManager {
@@ -22,9 +24,9 @@ class LoginManager {
             )
 
         } catch (e: SQLException) {
-            System.out.println("SQLException: " + e.message)
-            System.out.println("SQLState: " + e.sqlState)
-            System.out.println("VendorError: " + e.errorCode)
+            session.logger.log("SQLException: " + e.message, References.LEVEL_ERROR)
+            session.logger.log("SQLState: " + e.sqlState, References.LEVEL_ERROR)
+            session.logger.log("VendorError: " + e.errorCode, References.LEVEL_ERROR)
         }
     }
 
@@ -39,6 +41,7 @@ class LoginManager {
         // TODO: Questo funzionerà quando Kotlin rilascerà questa funzione al pubblico.
         // if(::correctPassword.isInitialized) return false
         try {
+            @Suppress("UNUSED_EXPRESSION")
             correctPassword
         } catch (e: kotlin.UninitializedPropertyAccessException) {
             return false
