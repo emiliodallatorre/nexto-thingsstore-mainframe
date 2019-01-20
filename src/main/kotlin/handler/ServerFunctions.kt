@@ -6,6 +6,11 @@ import com.nextocompany.thingsstore.session
 import java.io.DataInputStream
 import java.io.DataOutputStream
 
+/**
+ * In questa classe sono gestite le interazioni con tutti i client connessi.
+ * Da qui partono tutte le risposte ai client e si svolge il grosso del lavoro.
+ */
+
 class ServerFunctions {
     private lateinit var loginManager: LoginManager
 
@@ -15,12 +20,10 @@ class ServerFunctions {
         val id = rawData.split("§")[0]
         val password = rawData.split("§")[1]
 
-        session.login.login(id, password)
-
-        output.writeBoolean(id == "emiliodallatorre12@live.com" && password == "blindEye1201")
+        output.writeBoolean(session.login.login(id, password))
         output.flush()
 
-        if(id == "emiliodallatorre12@live.com" && password == "blindEye1201") ConnectionHandler().ping("Login di $id eseguito correttamente.", References.LEVEL_LOG)
+        if(session.login.login(id, password)) ConnectionHandler().ping("Login di $id eseguito correttamente.", References.LEVEL_LOG)
         else ConnectionHandler().ping("La password inserita da $id è sbagliata.", References.LEVEL_WARNING)
     }
 
