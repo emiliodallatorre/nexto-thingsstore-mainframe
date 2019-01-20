@@ -6,9 +6,18 @@ import java.io.BufferedWriter
 import java.text.SimpleDateFormat
 import java.util.*
 
+/**
+ * Questa classe si occupa di scrivere il log del server.
+ * Tutto il log viene salvato anche su un file, che funge da registro.
+ */
+
 class ServerLogger {
     lateinit var bufferedWriter: BufferedWriter
 
+    /**
+     * La funzione log stampa a schermo e su file i messaggi del server.
+     * I colori sono definiti tramite la codifica ANSI, e passati come referenze.
+     */
     fun log(message: String, level: Int) {
         val dateStamp: String = SimpleDateFormat("dd/MM/yyyy").format(Date())
         val timeStamp: String = SimpleDateFormat("HH:mm:ss").format(Date())

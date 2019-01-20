@@ -7,6 +7,12 @@ import java.io.DataOutputStream
 import java.io.EOFException
 import java.net.Socket
 
+/**
+ * Questa è una delle classi cruciali del server.
+ * Il suo scopo è quello di gestire le richieste del client e fornire le giuste risposte.
+ * Le funzioni che gestiscono le risposte da mandare al client sono in ServerFunctions().
+ */
+
 class ConnectionHandler : Thread() {
     private val functions: ServerFunctions = ServerFunctions()
     lateinit var clientSocket: Socket

@@ -8,6 +8,12 @@ import java.io.BufferedWriter
 import java.io.FileWriter
 import java.util.concurrent.Executors
 
+/**
+ * Questa classe inizializza la sessione del server.
+ * Ogni meccanismo che richieda un utilizzo ripetuto va inizializzato qui.
+ * L'obiettivo è di creare il minor numero di nuove istanze possibile per mantenere veloce l'esecuzione.
+ */
+
 class ServerInitializer {
 
     fun initLogger() {
@@ -35,6 +41,7 @@ class ServerInitializer {
 
     fun initLogin() {
         session.login = LoginManager()
+        session.login.connect()
     }
 
     fun initAll() {

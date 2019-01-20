@@ -3,6 +3,12 @@ package com.nextocompany.thingsstore.base
 import com.nextocompany.thingsstore.References
 import com.nextocompany.thingsstore.session
 
+/**
+ * Qui vengono dichiarati tutti i controlli del server.
+ * Di genere, non accettano argomenti.
+ * Ciascuno di questi "risponde" all'utente stampando a schermo qualcosa.
+ */
+
 class ServerControls {
 
     fun status() {

@@ -6,6 +6,13 @@ import com.nextocompany.thingsstore.session
 import java.net.ServerSocket
 import java.net.Socket
 
+/**
+ * Questa classe si occupa di aspettare che un client si connetta.
+ * Nel momento in cui un utente si connette, l'oggetto socket viene mandato a ConnectionHandler.
+ * Lo scopo di questa classe è quello di smistare, di fatto, le connessioni in entrata.
+ * Il metodo interrupt consente di fermare l'ascolto di nuove connessioni.
+ */
+
 class ConnectionWaiter : Thread() {
     private val serverSocket: ServerSocket = ServerSocket(References.SERVER_PORT)
     private lateinit var clientSocket: Socket
@@ -20,7 +27,6 @@ class ConnectionWaiter : Thread() {
 
             try {
                 clientSocket = serverSocket.accept()
-
 
                 val connectionHandler = ConnectionHandler()
                 connectionHandler.clientSocket = clientSocket
