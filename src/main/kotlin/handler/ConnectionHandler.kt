@@ -30,15 +30,28 @@ class ConnectionHandler : Thread() {
 
     private fun startHandling() {
         input = DataInputStream(clientSocket.getInputStream())
-
         output = DataOutputStream(clientSocket.getOutputStream())
 
         try {
-            when (input.readByte().toInt()) {
-                References.CODE_TEST -> functions.test(input, output)
-                References.CODE_LOGIN -> functions.validateLogin(input, output)
+            val intentionCode: Int = input.readByte().toInt()
+            // Solo nel caso in cui il codice di connessione sia il codice di controllo login, non effettua prima il controllo login.
+            if (intentionCode == References.CODE_LOGIN || intentionCode == References.CODE_TEST) functions.validateLogin(
+                input,
+                output
+            )
+            else {
+                val login: List<String> = input.readUTF().split("§")
+                if(session.login.login(login[0], login[1])) {
+                    when (intentionCode) {
+                        References.CODE_USERDATA -> functions.test(input, output)
+                        References.CODE_LOGIN -> functions.validateLogin(input, output)
 
-                else -> ping("Tentativo di accesso non riconosciuto.", References.LEVEL_ERROR)
+                        else -> ping("Tentativo di accesso non riconosciuto.", References.LEVEL_ERROR)
+                    }
+                } else {
+                    ping("Tentativo di login non accettato da " + login[0] + ".", References.LEVEL_ERROR)
+                }
+
             }
 
             stopHandling()

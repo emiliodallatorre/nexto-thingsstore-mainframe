@@ -1,7 +1,6 @@
 package com.nextocompany.thingsstore.handler
 
 import com.nextocompany.thingsstore.References
-import com.nextocompany.thingsstore.handler.mysql.LoginManager
 import com.nextocompany.thingsstore.session
 import java.io.DataInputStream
 import java.io.DataOutputStream
@@ -12,19 +11,22 @@ import java.io.DataOutputStream
  */
 
 class ServerFunctions {
-    private lateinit var loginManager: LoginManager
-
     fun validateLogin(input: DataInputStream, output: DataOutputStream) {
         // TODO: Change this way.
         val rawData = input.readUTF()
         val id = rawData.split("§")[0]
         val password = rawData.split("§")[1]
 
-        output.writeBoolean(session.login.login(id, password))
-        output.flush()
-
-        if(session.login.login(id, password)) ConnectionHandler().ping("Login di $id eseguito correttamente.", References.LEVEL_LOG)
-        else ConnectionHandler().ping("La password inserita da $id è sbagliata.", References.LEVEL_WARNING)
+        if(session.login.login(id, password)) {
+            output.writeBoolean(true)
+            output.flush()
+            ConnectionHandler().ping("Login di $id eseguito correttamente.", References.LEVEL_LOG)
+        }
+        else {
+            output.writeBoolean(false)
+            output.flush()
+            ConnectionHandler().ping("La password inserita da $id è sbagliata.", References.LEVEL_WARNING)
+        }
     }
 
     fun test(input: DataInputStream, output: DataOutputStream) {
