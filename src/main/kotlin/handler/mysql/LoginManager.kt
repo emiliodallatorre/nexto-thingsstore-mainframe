@@ -15,18 +15,19 @@ import java.sql.SQLException
 class LoginManager {
     private lateinit var connection: Connection
 
-    fun connect() {
-        try {
+    fun connect(): Boolean {
+        return try {
             connection = DriverManager.getConnection(
                 "jdbc:mysql://localhost:" + References.SQL_PORT + "/" + References.SQL_DATABASE + "?serverTimezone=" + References.SQL_TIMEZONE,
                 References.SQL_USERNAME,
                 References.SQL_PASSWORD
             )
-
+            true
         } catch (e: SQLException) {
             session.logger.log("SQLException: " + e.message, References.LEVEL_ERROR)
             session.logger.log("SQLState: " + e.sqlState, References.LEVEL_ERROR)
             session.logger.log("VendorError: " + e.errorCode, References.LEVEL_ERROR)
+            false
         }
     }
 

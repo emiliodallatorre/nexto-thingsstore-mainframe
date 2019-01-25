@@ -14,7 +14,7 @@ import java.net.Socket
  */
 
 class ConnectionWaiter : Thread() {
-    private val serverSocket: ServerSocket = ServerSocket(References.SERVER_PORT)
+    lateinit var serverSocket: ServerSocket
     private lateinit var clientSocket: Socket
 
     override fun run() {

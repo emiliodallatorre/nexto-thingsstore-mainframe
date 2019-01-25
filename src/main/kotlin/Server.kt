@@ -5,25 +5,32 @@ import java.util.*
 
 val session: ServerSession = ServerSession
 
-fun main(args: Array<String>) {
-    session.initializer = ServerInitializer()
+class Server {
+    var test: Boolean = false
+    var working: Boolean = false
 
-    session.initializer.initAll()
+    fun main() {
+        session.initializer = ServerInitializer()
 
-    session.listener.startListening()
+        session.initializer.initAll()
 
-    session.scanner = Scanner(System.`in`)
+        session.listener.startListening()
 
-    while (true) {
-        when (session.scanner.nextLine()) {
-            "stop" -> session.controls.stop()
-            "start" -> session.controls.start()
-            "verbose" -> session.controls.verbose()
-            "status" -> session.controls.status()
-            "disconnetti" -> session.controls.disconnectAll()
-            "log" -> session.controls.log()
-            "test" -> session.controls.test()
-            else -> session.logger.log("Errore, riprovare!\n", References.LEVEL_SERVER)
+        session.scanner = Scanner(System.`in`)
+
+        while (!test) {
+            when (session.scanner.nextLine()) {
+                "stop" -> session.controls.stop()
+                "start" -> session.controls.start()
+                "verbose" -> session.controls.verbose()
+                "status" -> session.controls.status()
+                "disconnetti" -> session.controls.disconnectAll()
+                "log" -> session.controls.log()
+                "test" -> session.controls.test()
+                else -> session.logger.log("Errore, riprovare!\n", References.LEVEL_SERVER)
+            }
         }
+
+        working = true
     }
 }

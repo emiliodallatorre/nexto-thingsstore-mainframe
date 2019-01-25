@@ -29,6 +29,7 @@ object References {
     const val LEVEL_FILE: Int = 5
 
     const val SERVER_PORT: Int = 2048
+    const val SERVER_TEST_PORT: Int = 2049
     const val SERVER_MAXCONNECTIONS: Int = 10
     const val SERVER_REFRESHRATE: Long = 1 * 1000
 

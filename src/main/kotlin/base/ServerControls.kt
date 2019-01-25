@@ -90,7 +90,8 @@ class ServerControls {
     }
 
     fun test() {
-        session.logger.log("Avvio dei test del server.", References.LEVEL_SERVER)
-        session.tester.test()
+        // TODO: Implementare.
+        session.logger.log("Questa funzione non è ancora disponibile.", References.LEVEL_SERVER)
+        // session.logger.log("Avvio dei test del server.", References.LEVEL_SERVER)
     }
 }
