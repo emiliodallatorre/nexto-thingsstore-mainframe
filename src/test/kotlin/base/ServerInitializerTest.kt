@@ -1,7 +1,10 @@
 package base
 
 import com.nextocompany.thingsstore.References
-import com.nextocompany.thingsstore.base.*
+import com.nextocompany.thingsstore.base.ConnectionListener
+import com.nextocompany.thingsstore.base.ConnectionWaiter
+import com.nextocompany.thingsstore.base.ServerInitializer
+import com.nextocompany.thingsstore.base.ServerLogger
 import com.nextocompany.thingsstore.handler.mysql.LoginManager
 import com.nextocompany.thingsstore.session
 import org.junit.jupiter.api.Test
@@ -13,12 +16,6 @@ internal class ServerInitializerTest {
     fun initLogger() {
         serverInitializer.initLogger()
         assert(session.logger is ServerLogger)
-    }
-
-    @Test
-    fun initControls() {
-        serverInitializer.initControls()
-        assert(session.controls is ServerControls)
     }
 
     @Test
@@ -43,7 +40,6 @@ internal class ServerInitializerTest {
     fun initAll() {
         serverInitializer.initAll()
         assert(session.logger is ServerLogger)
-        assert(session.controls is ServerControls)
         assert(session.listener is ConnectionListener)
         assert(session.waiter is ConnectionWaiter)
         assert(session.login is LoginManager)
