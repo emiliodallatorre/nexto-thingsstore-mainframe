@@ -52,7 +52,7 @@ class ServerInitializer {
         initListener()
         initWaiter()
         initLogin()
-        session.logger.log("Server inizializzato correttamente.",
+        ServerLogger.log("Server inizializzato correttamente.",
             References.LEVEL_MESSAGE
         )
     }

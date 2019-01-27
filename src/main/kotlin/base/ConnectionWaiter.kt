@@ -19,7 +19,7 @@ class ConnectionWaiter : Thread() {
 
     override fun run() {
         session.serverStatus = References.STATUS_RUNNING
-        session.logger.log("Attivato l'ascolto di nuove connessioni.",
+        ServerLogger.log("Attivato l'ascolto di nuove connessioni.",
             References.LEVEL_WARNING
         )
 
@@ -38,14 +38,14 @@ class ConnectionWaiter : Thread() {
                 if (session.serverStatus != References.STATUS_STOPPED) {
                     session.serverStatus =
                             References.STATUS_ERROR
-                    session.logger.log("Il server è stato interrotto senza apparente ragione.",
+                    ServerLogger.log("Il server è stato interrotto senza apparente ragione.",
                         References.LEVEL_ERROR
                     )
                 }
             }
         }
 
-        session.logger.log("Disattivato l'ascolto di nuove connessioni.",
+        ServerLogger.log("Disattivato l'ascolto di nuove connessioni.",
             References.LEVEL_WARNING
         )
     }

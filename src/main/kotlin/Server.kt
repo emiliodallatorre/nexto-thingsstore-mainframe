@@ -1,6 +1,7 @@
 package com.nextocompany.thingsstore
 
 import com.nextocompany.thingsstore.base.ServerInitializer
+import com.nextocompany.thingsstore.base.ServerLogger
 
 val session: ServerSession = ServerSession
 
@@ -15,18 +16,17 @@ fun main() {
     session.listener.startListening()
 
     while (!test) {
-
-            when (readLine()!!) {
-                "stop" -> session.controls.stop()
-                "start" -> session.controls.start()
-                "verbose" -> session.controls.verbose()
-                "status" -> session.controls.status()
-                "disconnetti" -> session.controls.disconnectAll()
-                "log" -> session.controls.log()
-                "test" -> session.controls.test()
-                else -> session.logger.log("Errore, riprovare!\n", References.LEVEL_SERVER)
-            }
-
+        when (readLine()!!) {
+            "stop" -> session.controls.stop()
+            "start" -> session.controls.start()
+            "verbose" -> session.controls.verbose()
+            "status" -> session.controls.status()
+            "disconnetti" -> session.controls.disconnectAll()
+            "log" -> session.controls.log()
+            "test" -> session.controls.test()
+            else -> ServerLogger.log("Errore, riprovare!\n", References.LEVEL_SERVER)
+        }
     }
+
     working = true
 }

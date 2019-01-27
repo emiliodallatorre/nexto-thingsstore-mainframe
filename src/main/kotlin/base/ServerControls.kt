@@ -13,11 +13,11 @@ class ServerControls {
 
     fun status() {
         when (session.serverStatus) {
-            References.STATUS_RUNNING -> session.logger.log(
+            References.STATUS_RUNNING -> ServerLogger.log(
                 "Il server sta funzionando normalmente.",
                 References.LEVEL_SERVER
             )
-            References.STATUS_STOPPED -> session.logger.log(
+            References.STATUS_STOPPED -> ServerLogger.log(
                 "Il server è stato interrotto dall'amministratore.",
                 References.LEVEL_SERVER
             )
@@ -27,20 +27,20 @@ class ServerControls {
     fun verbose() {
         session.verboseOutput = !session.verboseOutput
 
-        if (session.verboseOutput) session.logger.log("Modalità verbosa attivata.",
+        if (session.verboseOutput) ServerLogger.log("Modalità verbosa attivata.",
             References.LEVEL_SERVER
         )
-        else session.logger.log("Modalità verbosa disattivata.",
+        else ServerLogger.log("Modalità verbosa disattivata.",
             References.LEVEL_SERVER
         )
     }
 
     fun stop() {
-        session.logger.log("Tentativo di disattivare l\'ascolto di nuove connessioni.",
+        ServerLogger.log("Tentativo di disattivare l\'ascolto di nuove connessioni.",
             References.LEVEL_SERVER
         )
 
-        if (session.serverStatus == References.STATUS_STOPPED) session.logger.log(
+        if (session.serverStatus == References.STATUS_STOPPED) ServerLogger.log(
             "Il server è già inattivo.",
             References.LEVEL_MESSAGE
         )
@@ -48,11 +48,11 @@ class ServerControls {
     }
 
     fun start() {
-        session.logger.log("Tentativo di attivare l\'ascolto di nuove connessioni.",
+        ServerLogger.log("Tentativo di attivare l\'ascolto di nuove connessioni.",
             References.LEVEL_SERVER
         )
 
-        if (session.serverStatus == References.STATUS_RUNNING) session.logger.log(
+        if (session.serverStatus == References.STATUS_RUNNING) ServerLogger.log(
             "Il server è già attivo.",
             References.LEVEL_MESSAGE
         )
@@ -60,7 +60,7 @@ class ServerControls {
     }
 
     fun disconnectAll() {
-        session.logger.log("Avvio disconnessione degli utenti.",
+        ServerLogger.log("Avvio disconnessione degli utenti.",
             References.LEVEL_SERVER
         )
         Thread().run {
@@ -69,10 +69,10 @@ class ServerControls {
                 Thread.sleep(References.SERVER_REFRESHRATE)
             }
 
-            session.logger.log("Tutti gli utenti sono stati disconnessi correttamente.",
+            ServerLogger.log("Tutti gli utenti sono stati disconnessi correttamente.",
                 References.LEVEL_WARNING
             )
-            session.logger.log("Payout del server: " + session.listener.executor,
+            ServerLogger.log("Payout del server: " + session.listener.executor,
                 References.LEVEL_LOG
             )
 
@@ -81,17 +81,17 @@ class ServerControls {
     }
 
     fun log() {
-        session.logger.log("Inserire testo da loggare nel file: ",
+        ServerLogger.log("Inserire testo da loggare nel file: ",
             References.LEVEL_MESSAGE
         )
-        session.logger.log("# USER: " + readLine()!!,
+        ServerLogger.log("# USER: " + readLine()!!,
             References.LEVEL_FILE
         )
     }
 
     fun test() {
         // TODO: Implementare.
-        session.logger.log("Questa funzione non è ancora disponibile.", References.LEVEL_SERVER)
-        // session.logger.log("Avvio dei test del server.", References.LEVEL_SERVER)
+        ServerLogger.log("Questa funzione non è ancora disponibile.", References.LEVEL_SERVER)
+        // ServerLogger.log("Avvio dei test del server.", References.LEVEL_SERVER)
     }
 }

@@ -1,7 +1,7 @@
 package com.nextocompany.thingsstore.handler.mysql
 
 import com.nextocompany.thingsstore.References
-import com.nextocompany.thingsstore.session
+import com.nextocompany.thingsstore.base.ServerLogger
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.ResultSet
@@ -24,9 +24,9 @@ class LoginManager {
             )
             true
         } catch (e: SQLException) {
-            session.logger.log("SQLException: " + e.message, References.LEVEL_ERROR)
-            session.logger.log("SQLState: " + e.sqlState, References.LEVEL_ERROR)
-            session.logger.log("VendorError: " + e.errorCode, References.LEVEL_ERROR)
+            ServerLogger.log("SQLException: " + e.message, References.LEVEL_ERROR)
+            ServerLogger.log("SQLState: " + e.sqlState, References.LEVEL_ERROR)
+            ServerLogger.log("VendorError: " + e.errorCode, References.LEVEL_ERROR)
             false
         }
     }

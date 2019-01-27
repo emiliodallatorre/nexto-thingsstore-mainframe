@@ -1,6 +1,7 @@
 package com.nextocompany.thingsstore.handler
 
 import com.nextocompany.thingsstore.References
+import com.nextocompany.thingsstore.base.ServerLogger
 import com.nextocompany.thingsstore.session
 import java.io.DataInputStream
 import java.io.DataOutputStream
@@ -73,6 +74,6 @@ class ConnectionHandler : Thread() {
 
     fun ping(message: String, level: Int) {
         // Qui viene aggiunto il prefisso del thread all'output del log.
-        session.logger.log("[ " + String.format("%03d", Thread.currentThread().id) + " ] $message", level)
+        ServerLogger.log("[ " + String.format("%03d", Thread.currentThread().id) + " ] $message", level)
     }
 }

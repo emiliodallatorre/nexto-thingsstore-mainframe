@@ -21,7 +21,7 @@ class ConnectionListener {
     fun stopListening() {
         session.waiter.interrupt()
         session.waiter.join()
-        session.logger.log("Payout del server: " + ServerSession.listener.executor,
+        ServerLogger.log("Payout del server: " + ServerSession.listener.executor,
             References.LEVEL_LOG
         )
         session.initializer.initWaiter()
