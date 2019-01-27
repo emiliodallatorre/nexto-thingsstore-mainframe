@@ -1,5 +1,6 @@
 package com.nextocompany.thingsstore
 
+import com.nextocompany.thingsstore.base.ServerControls
 import com.nextocompany.thingsstore.base.ServerInitializer
 import com.nextocompany.thingsstore.base.ServerLogger
 
@@ -17,13 +18,13 @@ fun main() {
 
     while (!test) {
         when (readLine()!!) {
-            "stop" -> session.controls.stop()
-            "start" -> session.controls.start()
-            "verbose" -> session.controls.verbose()
-            "status" -> session.controls.status()
-            "disconnetti" -> session.controls.disconnectAll()
-            "log" -> session.controls.log()
-            "test" -> session.controls.test()
+            "stop" -> ServerControls.stop()
+            "start" -> ServerControls.start()
+            "verbose" -> ServerControls.verbose()
+            "status" -> ServerControls.status()
+            "disconnetti" -> ServerControls.disconnectAll()
+            "log" -> ServerControls.log()
+            "test" -> ServerControls.test()
             else -> ServerLogger.log("Errore, riprovare!\n", References.LEVEL_SERVER)
         }
     }

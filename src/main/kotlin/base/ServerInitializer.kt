@@ -21,10 +21,6 @@ class ServerInitializer {
         session.logger.bufferedWriter = BufferedWriter(FileWriter(References.FILE_LOG, true))
     }
 
-    fun initControls() {
-        session.controls = ServerControls()
-    }
-
     fun initListener() {
         val connectionListener = ConnectionListener()
         connectionListener.executor = Executors.newFixedThreadPool(References.SERVER_MAXCONNECTIONS)
@@ -48,7 +44,6 @@ class ServerInitializer {
 
     fun initAll() {
         initLogger()
-        initControls()
         initListener()
         initWaiter()
         initLogin()
