@@ -7,6 +7,7 @@ import com.nextocompany.thingsstore.base.ServerInitializer
 import com.nextocompany.thingsstore.base.ServerLogger
 import com.nextocompany.thingsstore.handler.mysql.LoginManager
 import com.nextocompany.thingsstore.session
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
 internal class ServerInitializerTest {
@@ -30,6 +31,8 @@ internal class ServerInitializerTest {
         assert(session.waiter is ConnectionWaiter)
     }
 
+    // Questo test è disabilitato poiché in Travis non c'è connessione al server MySQL locale.
+    @Disabled
     @Test
     fun initLogin() {
         serverInitializer.initLogin()
