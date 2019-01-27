@@ -84,7 +84,7 @@ class ServerControls {
         session.logger.log("Inserire testo da loggare nel file: ",
             References.LEVEL_MESSAGE
         )
-        session.logger.log("# USER: " + session.scanner.nextLine(),
+        session.logger.log("# USER: " + readLine()!!,
             References.LEVEL_FILE
         )
     }

@@ -1,25 +1,22 @@
 package com.nextocompany.thingsstore
 
 import com.nextocompany.thingsstore.base.ServerInitializer
-import java.util.*
 
 val session: ServerSession = ServerSession
 
-class Server {
-    var test: Boolean = false
-    var working: Boolean = false
+var test: Boolean = false
+var working: Boolean = false
 
-    fun main() {
-        session.initializer = ServerInitializer()
+fun main() {
+    session.initializer = ServerInitializer()
 
-        session.initializer.initAll()
+    session.initializer.initAll()
 
-        session.listener.startListening()
+    session.listener.startListening()
 
-        session.scanner = Scanner(System.`in`)
+    while (!test) {
 
-        while (!test) {
-            when (session.scanner.nextLine()) {
+            when (readLine()!!) {
                 "stop" -> session.controls.stop()
                 "start" -> session.controls.start()
                 "verbose" -> session.controls.verbose()
@@ -29,8 +26,7 @@ class Server {
                 "test" -> session.controls.test()
                 else -> session.logger.log("Errore, riprovare!\n", References.LEVEL_SERVER)
             }
-        }
 
-        working = true
     }
+    working = true
 }
