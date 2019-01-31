@@ -3,9 +3,9 @@ package com.nextocompany.thingsstore.base
 import com.nextocompany.thingsstore.References
 import com.nextocompany.thingsstore.handler.mysql.LoginManager
 import com.nextocompany.thingsstore.session
-import com.nextocompany.thingsstore.test.ServerTest
 import java.io.BufferedWriter
 import java.io.FileWriter
+import java.net.ServerSocket
 import java.util.concurrent.Executors
 
 /**
@@ -21,10 +21,6 @@ class ServerInitializer {
         session.logger.bufferedWriter = BufferedWriter(FileWriter(References.FILE_LOG, true))
     }
 
-    fun initControls() {
-        session.controls = ServerControls()
-    }
-
     fun initListener() {
         val connectionListener = ConnectionListener()
         connectionListener.executor = Executors.newFixedThreadPool(References.SERVER_MAXCONNECTIONS)
@@ -33,10 +29,12 @@ class ServerInitializer {
 
     fun initWaiter() {
         session.waiter = ConnectionWaiter()
+        session.waiter.serverSocket = ServerSocket(References.SERVER_PORT)
     }
 
-    fun initTester() {
-        session.tester = ServerTest()
+    fun initWaiter(port: Int) {
+        session.waiter = ConnectionWaiter()
+        session.waiter.serverSocket = ServerSocket(port)
     }
 
     fun initLogin() {
@@ -46,12 +44,10 @@ class ServerInitializer {
 
     fun initAll() {
         initLogger()
-        initControls()
         initListener()
         initWaiter()
-        initTester()
         initLogin()
-        session.logger.log("Server inizializzato correttamente.",
+        ServerLogger.log("Server inizializzato correttamente.",
             References.LEVEL_MESSAGE
         )
     }

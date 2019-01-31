@@ -1,29 +1,33 @@
 package com.nextocompany.thingsstore
 
+import com.nextocompany.thingsstore.base.ServerControls
 import com.nextocompany.thingsstore.base.ServerInitializer
-import java.util.*
+import com.nextocompany.thingsstore.base.ServerLogger
 
 val session: ServerSession = ServerSession
 
-fun main(args: Array<String>) {
+var test: Boolean = false
+var working: Boolean = false
+
+fun main() {
     session.initializer = ServerInitializer()
 
     session.initializer.initAll()
 
     session.listener.startListening()
 
-    session.scanner = Scanner(System.`in`)
-
-    while (true) {
-        when (session.scanner.nextLine()) {
-            "stop" -> session.controls.stop()
-            "start" -> session.controls.start()
-            "verbose" -> session.controls.verbose()
-            "status" -> session.controls.status()
-            "disconnetti" -> session.controls.disconnectAll()
-            "log" -> session.controls.log()
-            "test" -> session.controls.test()
-            else -> session.logger.log("Errore, riprovare!\n", References.LEVEL_SERVER)
+    while (!test) {
+        when (readLine()!!) {
+            "stop" -> ServerControls.stop()
+            "start" -> ServerControls.start()
+            "verbose" -> ServerControls.verbose()
+            "status" -> ServerControls.status()
+            "disconnetti" -> ServerControls.disconnectAll()
+            "log" -> ServerControls.log()
+            "test" -> ServerControls.test()
+            else -> ServerLogger.log("Errore, riprovare!\n", References.LEVEL_SERVER)
         }
     }
+
+    working = true
 }
