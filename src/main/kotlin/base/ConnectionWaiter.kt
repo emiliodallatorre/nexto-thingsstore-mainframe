@@ -26,6 +26,11 @@ class ConnectionWaiter : Thread() {
         while (session.serverStatus == References.STATUS_RUNNING) {
 
             try {
+                session.serverStatus = References.STATUS_RUNNING
+                ServerLogger.log("Aspettando per la connessione...",
+                    References.LEVEL_LOG
+                )
+
                 clientSocket = serverSocket.accept()
 
                 val connectionHandler = ConnectionHandler()
