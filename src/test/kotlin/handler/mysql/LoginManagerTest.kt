@@ -1,6 +1,7 @@
 package handler.mysql
 
 import com.nextocompany.thingsstore.handler.mysql.LoginManager
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
 internal class LoginManagerTest {
@@ -8,11 +9,13 @@ internal class LoginManagerTest {
 
     // Questi test sono disabilitati poiché in Travis non c'è connessione al server MySQL locale.
 
+    @Disabled
     @Test
     fun connect() {
         assert(loginManager.connect())
     }
 
+    @Disabled
     @Test
     fun login() {
         assert(loginManager.connect())
