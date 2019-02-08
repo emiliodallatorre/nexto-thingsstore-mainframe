@@ -40,6 +40,7 @@ class ServerFunctions {
     }
 
     fun getUserData(output: DataOutputStream, id: String) {
+        ConnectionHandler().ping("Inizio trasmissione dati di $id.", References.LEVEL_LOG)
         output.writeByte(References.CODE_USERDATA)
         output.writeUTF(session.login.userData(id))
         output.flush()
