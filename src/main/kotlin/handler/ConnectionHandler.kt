@@ -37,7 +37,8 @@ class ConnectionHandler : Thread() {
             val intentionCode: Int = input.readByte().toInt()
             // Solo nel caso in cui il codice di connessione sia il codice di controllo login, non effettua prima il controllo login.
             if (intentionCode == References.CODE_LOGIN) functions.validateLogin(input, output)
-            if (intentionCode == References.CODE_TEST) functions.test(input, output)
+
+            else if (intentionCode == References.CODE_TEST) functions.test(input, output)
 
             else {
                 // Verifica che il token di login inviato sia corretto.
