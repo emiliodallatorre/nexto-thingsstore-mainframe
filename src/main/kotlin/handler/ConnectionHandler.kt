@@ -40,11 +40,12 @@ class ConnectionHandler : Thread() {
             if (intentionCode == References.CODE_TEST) functions.test(input, output)
 
             else {
+                // Verifica che il token di login inviato sia corretto.
                 val login: List<String> = input.readUTF().split("§")
                 if (session.login.login(login[0], login[1])) {
+
                     when (intentionCode) {
-                        References.CODE_USERDATA -> functions.test(input, output)
-                        References.CODE_LOGIN -> functions.validateLogin(input, output)
+                        References.CODE_USERDATA -> functions.getUserData(output, login[0])
 
                         else -> ping("Tentativo di accesso non riconosciuto.", References.LEVEL_ERROR)
                     }

@@ -51,4 +51,22 @@ class LoginManager {
 
         return password == correctPassword
     }
+
+    fun userData(id: String): String {
+        lateinit var username: String
+        lateinit var email: String
+        lateinit var name: String
+        lateinit var surname: String
+
+        val resultSet: ResultSet = connection.createStatement().executeQuery("SELECT * FROM " + References.SQL_TABLE + " WHERE (username='$id' || email='$id')")
+
+        while (resultSet.next()) {
+            username = resultSet.getString("username")
+            email = resultSet.getString("email")
+            name = resultSet.getString("name")
+            surname = resultSet.getString("surname")
+        }
+
+        return "$username§$email§$name§$surname"
+    }
 }

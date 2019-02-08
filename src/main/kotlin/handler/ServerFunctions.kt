@@ -38,4 +38,10 @@ class ServerFunctions {
             output.flush()
         }
     }
+
+    fun getUserData(output: DataOutputStream, id: String) {
+        output.writeByte(References.CODE_USERDATA)
+        output.writeUTF(session.login.userData(id))
+        output.flush()
+    }
 }
