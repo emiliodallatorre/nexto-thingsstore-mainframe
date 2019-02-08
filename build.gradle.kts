@@ -53,3 +53,20 @@ val run by tasks.getting(JavaExec::class) {
 }
 
 defaultTasks("run")
+
+val fatJar = task("fatJar", type = Jar::class) {
+    baseName = "${project.name}-fat"
+    manifest {
+        attributes["Implementation-Title"] = "Things Store server's JAR."
+        attributes["Implementation-Version"] = version
+        attributes["Main-Class"] = "com.nextocompany.thingsstore.ServerKt"
+    }
+    from(configurations.runtime.map { if (it.isDirectory) it else zipTree(it) })
+    with(tasks["jar"] as CopySpec)
+}
+
+tasks {
+    "build" {
+        dependsOn(fatJar)
+    }
+}
