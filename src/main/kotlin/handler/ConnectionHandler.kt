@@ -50,7 +50,7 @@ class ConnectionHandler : Thread() {
                         else -> ping("Tentativo di accesso non riconosciuto.", References.LEVEL_ERROR)
                     }
                 } else {
-                    ping("Tentativo di login non accettato da " + login[0] + ".", References.LEVEL_ERROR)
+                    ping("Tentativo di accesso senza login corretto non accettato da " + login[0] + ".", References.LEVEL_ERROR)
                 }
             }
 
